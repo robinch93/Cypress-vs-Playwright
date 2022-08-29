@@ -1,0 +1,13 @@
+node_modules
+/test-results/
+
+coverage
+browsers
+
+# cypress related files
+cypress/screenshots
+cypress/videos
+
+# playwright related files
+/playwright-report/
+/playwright/.cache/

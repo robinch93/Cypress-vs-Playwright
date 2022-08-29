@@ -1,0 +1,28 @@
+{
+  "name": "cypress-plawright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cy:open:chromium": "node_modules/.bin/cypress open --e2e --browser browsers/chromium-*/chrome-mac/Chromium.app/Contents/MacOS/Chromium",
+    "cy:open:firefox": "node_modules/.bin/cypress open --e2e --browser browsers/firefox-*/firefox/Nightly.app/Contents/MacOS/firefox",
+    "cy:open:e2e": "cypress open --e2e"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robinch93/cypress-vs-plawright.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robinch93/cypress-plawright/issues"
+  },
+  "homepage": "https://github.com/robinch93/cypress-plawright#readme",
+  "devDependencies": {
+    "@jsdevtools/readdir-enhanced": "^6.0.4",
+    "@playwright/test": "^1.25.1",
+    "cypress": "^10.6.0",
+    "playwright": "^1.25.1"
+  }
+}
