@@ -17,4 +17,4 @@ const Page = {
     title: '.page-title'
 }
 
-module.exports = { Filters, Product }
+module.exports = { Filters, Product, Page }

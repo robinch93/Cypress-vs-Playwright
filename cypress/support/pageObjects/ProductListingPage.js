@@ -1,10 +1,14 @@
-const { Filters, Product } = require('../../../Locators/ProductListingPage');
+const { Filters, Product, Page } = require('../../../Locators/ProductListingPage');
 const { Helper } = require('../../support/helpers/Helper');
 
 class ProductListingPage {
 
     constructor(helper = new Helper()) {
         this.helper = helper
+    }
+
+    getPageTitle() {
+        return cy.get(Page.title);
     }
 
     getSortByDropDown() {
@@ -48,7 +52,6 @@ class ProductListingPage {
         return new Cypress.Promise(async (resolve) => {
             let exists = await this.helper.elementExists(productInfo)
             if (exists) {
-                cy.log('comes here')
                 cy.get(productInfo).each((info) => {
                     cy.get(info).invoke('text').then((text) => {
                         infoArray.push(text)

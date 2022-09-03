@@ -16,6 +16,17 @@ class Helper {
         return range
     }
 
+    getText = (element) => {
+        let text = ''
+        return new Cypress.Promise((resolve) => {
+            cy.get(element).invoke('text').then((text) => {
+                text.replace(/[^a-z0-9]+/gi, '')
+            }).then(() => {
+                resolve(text)
+            })
+        })
+    }
+
     elementExists = (element) => {
         let exists = true
         return new Cypress.Promise((resolve) => {

@@ -1,26 +1,34 @@
+const { Helper } = require('../../support/helpers/Helper')
 const { HomePage } = require('../../support/pageObjects/HomePage')
+const { ProductListingPage } = require('../../support/pageObjects/ProductListingPage')
 
 context('Navigation', () => {
+
+    const plp = new ProductListingPage()
+    const home = new HomePage()
+    const helper = new Helper()
 
     beforeEach(() => {
         cy.visit('/')
     })
 
-    it('Check if expecteed urls pages are redirected from top menu', () => {
+    it('Check if expected urls and page title are redirected from top menu', () => {
 
         let expectedUrls = ['books', 'computers', 'electronics', 'apparel-shoes', 'digital-downloads', 'jewelry', 'gift-cards']
-        const home = new HomePage()
 
         home.getNaviationMenu().each((item, i) => {
             home.getNaviationMenu().eq(i).click()
             cy.url().should('contain', '/' + expectedUrls[i])
+            plp.getPageTitle().invoke('text').then((title) => {
+                title = title.toLowerCase().replace(/[^a-z0-9]+/gi, '')
+                expect(title).to.be.equal(expectedUrls[i].replace(/[^a-z0-9]+/gi, ''))
+            })
         })
     })
 
     it('Check if links navigate to correct landing pages and correct top menu is shown', () => {
 
         let expectedTopNav = ['Books', 'Computers', 'Electronics', 'Apparel & Shoes', 'Digital downloads', 'Jewelry', 'Gift Cards']
-        const home = new HomePage()
 
         home.getNaviationMenu().should('have.length', 7)
 
@@ -33,7 +41,6 @@ context('Navigation', () => {
 
     it('Check if correct sub navigations are shown for the top menu - COMPUTERS', () => {
 
-        const home = new HomePage()
         home.getNaviationMenu().eq(1).trigger('mouseover')
 
         home.getNaviationMenu().get('ul.active>li')
@@ -48,7 +55,6 @@ context('Navigation', () => {
 
     it('Check if correct sub navigations are shown for the top menu - ELECTRONICS', () => {
 
-        const home = new HomePage()
         home.getNaviationMenu().eq(2).trigger('mouseover')
 
         home.getNaviationMenu().get('ul.active>li')
