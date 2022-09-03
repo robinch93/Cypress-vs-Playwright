@@ -6,7 +6,18 @@ context('Navigation', () => {
         cy.visit('/')
     })
 
-    it('Check if correct navigations are shown in the top menu', () => {
+    it('Check if expecteed urls pages are redirected from top menu', () => {
+
+        let expectedUrls = ['books', 'computers', 'electronics', 'apparel-shoes', 'digital-downloads', 'jewelry', 'gift-cards']
+        const home = new HomePage()
+
+        home.getNaviationMenu().each((item, i) => {
+            home.getNaviationMenu().eq(i).click()
+            cy.url().should('contain', '/' + expectedUrls[i])
+        })
+    })
+
+    it('Check if links navigate to correct landing pages and correct top menu is shown', () => {
 
         let expectedTopNav = ['Books', 'Computers', 'Electronics', 'Apparel & Shoes', 'Digital downloads', 'Jewelry', 'Gift Cards']
         const home = new HomePage()
@@ -14,6 +25,8 @@ context('Navigation', () => {
         home.getNaviationMenu().should('have.length', 7)
 
         home.getNaviationMenu().each((item, i) => {
+            expect(item).to.contain.text(expectedTopNav[i])
+            home.getNaviationMenu().eq(i).click()
             expect(item).to.contain.text(expectedTopNav[i])
         })
     })
