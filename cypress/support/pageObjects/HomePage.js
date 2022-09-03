@@ -1,7 +1,9 @@
+const { Homepage } = require('../../../Locators/HomePage')
+
 class HomePage {
 
     getNaviationMenu() {
-        return cy.get('.top-menu>li');
+        return cy.get(Homepage.topMenu);
     }
 
 }
