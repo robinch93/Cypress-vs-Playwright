@@ -1,0 +1,4 @@
+@hostname = http://localhost:3000/
+
+GET {{hostname}}topmenu
+Content-Type: application/json

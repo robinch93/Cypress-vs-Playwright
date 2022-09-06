@@ -4,9 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node api/server.js",
+    "dev": "nodemon api/server.js",
     "cy:open:chromium": "node_modules/.bin/cypress open --e2e --browser browsers/chromium-*/chrome-mac/Chromium.app/Contents/MacOS/Chromium",
     "cy:open:firefox": "node_modules/.bin/cypress open --e2e --browser browsers/firefox-*/firefox/Nightly.app/Contents/MacOS/firefox",
-    "cy:open:e2e": "cypress open --e2e"
+    "cy:open:e2e": "cypress open --e2e",
+    "pw:test:chromium": "npx playwright test playwright/e2e/example.spec.js --project=chromium",
+    "pw:test:firefox": "npx playwright test playwright/e2e/example.spec.js --project=firefox",
+    "pw:test:webkit": "npx playwright test playwright/e2e --project=webkit"
   },
   "repository": {
     "type": "git",
@@ -23,6 +28,14 @@
     "@jsdevtools/readdir-enhanced": "^6.0.4",
     "@playwright/test": "^1.25.1",
     "cypress": "^10.6.0",
+    "nodemon": "^2.0.19",
     "playwright": "^1.25.1"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "pretty": "^2.0.0"
   }
 }
