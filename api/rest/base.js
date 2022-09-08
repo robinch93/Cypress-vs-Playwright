@@ -8,7 +8,8 @@ const instance = axios.create({
     timeout: 1000
 })
 
-let getData = async () => instance.get(baseUrl).then(response => {
+let getData = async (url) => instance.get(baseUrl + '/' + url).then(response => {
+    console.log(baseUrl + '/' + url)
     const $ = cheerio.load(response.data)
     return $
 }).catch(function (e) {

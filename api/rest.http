@@ -1,4 +1,28 @@
 @hostname = http://localhost:3000/
 
+### --------- Top Menu Request ---------- ###
+
 GET {{hostname}}topmenu
+Content-Type: application/json
+
+### Sub Menu Request ###
+
+GET {{hostname}}menu/Computers
+Content-Type: application/json
+
+###
+
+GET {{hostname}}menu/Electronics
+Content-Type: application/json
+
+### Product Listing Page Request ###
+
+# get all products on desktops plp
+GET {{hostname}}products/desktops
+Content-Type: application/json
+
+###
+
+# get product details of desktops page with productid as 72
+GET {{hostname}}desktops/product/72
 Content-Type: application/json

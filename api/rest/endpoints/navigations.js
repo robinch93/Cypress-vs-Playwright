@@ -1,9 +1,10 @@
 const { getData, baseUrl } = require('../base')
 const { getText } = require('../utils')
 const router = require('express').Router()
+const _ = require('lodash')
 
 const getNavigations = async () => {
-    const $ = await getData()
+    const $ = await getData('')
     let data = {}
 
     let topmenu = []
@@ -25,11 +26,16 @@ const getNavigations = async () => {
 }
 
 const getMenuNav = async (menuName) => {
-    const $ = await getData()
+    const $ = await getData('')
     let data = {}
 
     let submenu = []
     let links = {}
+
+    menuName = menuName == 'apparel-shoes' ? 'Apparel & Shoes' :
+        menuName == 'digital-downloads' ? 'Digital downloads' :
+            menuName == 'gift-cards' ? 'Gift Cards' : _.upperFirst(_.toLower(menuName))
+
     let baseElement = $(`ul.top-menu li:contains("${menuName}")`).first().html()
     $(baseElement).find('ul.sublist li').each(function (i, element) {
         let menuLink = $(element).find('a').attr('href')
