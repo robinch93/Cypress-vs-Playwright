@@ -3,12 +3,12 @@
 This project is implementation of testing [Tricentis](https://demowebshop.tricentis.com/) web application using Cypress and Playwright Framework. 
 
 **Prerequisites**
-1. Download [NodeJS](https://nodejs.org/en/download/)
-2. Download [Docker](https://www.docker.com/)
+1. `git clone https://github.com/robinch93/Cypress-vs-Playwright.git`
+2. Download [NodeJS](https://nodejs.org/en/download/)
+3. Download [Docker](https://www.docker.com/)
 
-**Tricentis REST API** <br /> [Tricentis](https://demowebshop.tricentis.com/) web application data is exposed via rest api endpoints created using [express](https://expressjs.com/) framework which works as a microservice to be consumed by the e2e api test cases.  
-
-**Using API server**
+**Tricentis REST API** <br /> [Tricentis](https://demowebshop.tricentis.com/) web application data is exposed via rest api endpoints created using [express](https://expressjs.com/) framework which works as a microservice to be consumed by the e2e api test cases. Follow steps to use API service:
+<br />
 1. Run `npm install && npm run api:server` or `docker-compose up -d api` 
 2. Import [Postman](https://github.com/robinch93/Cypress-vs-Playwright/blob/master/api/collections/tricentis-api.postman_collection.json) or [Insomnia](https://github.com/robinch93/Cypress-vs-Playwright/blob/master/api/collections/tricentis-api.insomnia_collection.json) collections to make api requests 
 3. Example Curl Request for topmenu endpoint: <br />
