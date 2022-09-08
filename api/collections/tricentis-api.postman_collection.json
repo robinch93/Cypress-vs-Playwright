@@ -6,12 +6,46 @@
 	},
 	"item": [
 		{
-			"name": "topmenu",
-			"request": {
-				"method": "GET",
-				"header": []
-			},
-			"response": []
+			"name": "Navigations",
+			"item": [
+				{
+					"name": "topmenu",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "submenu",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product Listing Pages",
+			"item": [
+				{
+					"name": "plp-products",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "product with id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
