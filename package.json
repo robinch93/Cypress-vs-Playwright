@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node api/server.js",
-    "dev": "nodemon api/server.js",
+    "api:server": "node api/server.js",
+    "dev:server": "nodemon api/server.js",
     "cy:open:chromium": "node_modules/.bin/cypress open --e2e --browser browsers/chromium-*/chrome-mac/Chromium.app/Contents/MacOS/Chromium",
     "cy:open:firefox": "node_modules/.bin/cypress open --e2e --browser browsers/firefox-*/firefox/Nightly.app/Contents/MacOS/firefox",
     "cy:open:e2e": "cypress open --e2e",
