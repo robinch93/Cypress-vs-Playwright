@@ -27,7 +27,7 @@
 			]
 		},
 		{
-			"name": "Product Listing Pages",
+			"name": "Product Listing Page",
 			"item": [
 				{
 					"name": "plp-products",
@@ -39,6 +39,19 @@
 				},
 				{
 					"name": "product with id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product Description Page",
+			"item": [
+				{
+					"name": "product details with product name",
 					"request": {
 						"method": "GET",
 						"header": []
