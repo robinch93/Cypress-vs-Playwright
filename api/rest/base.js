@@ -13,7 +13,11 @@ let getData = async (url) => instance.get(baseUrl + '/' + url).then(response => 
     const $ = cheerio.load(response.data)
     return $
 }).catch(function (e) {
-    console.log(e)
+    return {
+        errorMessage: e.message,
+        errorStatusCode: e.response.status,
+        errorStatusText: e.response.statusText
+    }
 })
 
 module.exports = { getData, baseUrl }

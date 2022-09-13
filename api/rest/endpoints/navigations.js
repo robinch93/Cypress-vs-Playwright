@@ -25,9 +25,13 @@ const getNavigations = async () => {
     return data
 }
 
-const getMenuNav = async (menuName) => {
-    const $ = await getData('')
+const getSubmenu = async (menuName) => {
+    const $ = await getData(menuName)
     let data = {}
+
+    if ($.hasOwnProperty('errorMessage')) {
+        return data = $
+    }
 
     let submenu = []
     let links = {}
@@ -52,19 +56,24 @@ const getMenuNav = async (menuName) => {
     return data
 }
 
-const navigations = async (req, res) => {
-    const data = await getNavigations()
-    res.status(200).send(data)
-}
-
 const menuNavigations = async (req, res) => {
     let name = req.params.menuName
-    const data = await getMenuNav(name)
+
+    if (name != null || name != undefined) {
+        data = await getSubmenu(name)
+
+        if (data.hasOwnProperty('errorMessage')) {
+            return res.status(404).send({ code: data['errorStatusCode'], message: `Menu with name '${name}' not found` })
+        }
+    } else {
+        data = await getNavigations()
+    }
+
     res.status(200).send(data)
 }
 
 const navRoutes = (app) => {
-    router.get('/topmenu', navigations)
+    router.get('/topmenu', menuNavigations)
     router.get('/menu/:menuName', menuNavigations)
     app.use(router)
 }

@@ -11,11 +11,21 @@ const app = express()
 var corsOptions = {
     origin: `http://localhost:${PORT}`
 }
+
 app.use(cors(corsOptions))
 
-navRoutes(app)
-plpRoutes(app)
-pdpRoutes(app)
+app.use((err, req, res, next) => {
+    res.status(500).send({ message: 'Something went wrong.' })
+})
+
+// global error handler
+const use = fn => (req, res, next) => {
+    Promise.resolve(fn(req, res, next)).catch(next)
+}
+
+use(navRoutes(app))
+use(plpRoutes(app))
+use(pdpRoutes(app))
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)

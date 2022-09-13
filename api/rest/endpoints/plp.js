@@ -6,6 +6,10 @@ const getProducts = async (productType) => {
     const $ = await getData(productType)
     let data = {}
 
+    if ($.hasOwnProperty('errorMessage')) {
+        return data = $
+    }
+
     let products = {}
 
     let numberOfProducts = $('.product-item').length
@@ -38,7 +42,19 @@ const getProduct = async (productId, productType) => {
     const $ = await getData(productType)
     let data = {}
 
+    if ($.hasOwnProperty('errorMessage')) {
+        return data = $
+    }
+
     let element = $('.item-box').find(`[data-productid='${productId}']`).html()
+
+    if (element == null) {
+        return {
+            errorMessage: `Product with productId '${productId}' is not found for category '${productType}'`,
+            errorStatusCode: '404',
+            errorStatusText: 'Not Found'
+        }
+    }
 
     let productTitle = $(element).find('.product-title a').text().trim()
     let productLink = baseUrl + $(element).find('.product-title a').attr('href')
@@ -59,14 +75,27 @@ const getProduct = async (productId, productType) => {
 const products = async (req, res) => {
     let productType = req.params.productType
     const data = await getProducts(productType)
-    res.status(200).send(data)
+    if (data.hasOwnProperty('errorMessage')) {
+        return res.status(404).send({ code: data['errorStatusCode'], message: `Product type '${productType}' not found` })
+    } else {
+        res.status(200).send(data)
+    }
 }
 
 const product = async (req, res) => {
-    let id = req.params.productId
-    let type = req.params.productType
-    const data = await getProduct(id, type)
-    res.status(200).send(data)
+    let productId = req.params.productId
+    let productType = req.params.productType
+    const data = await getProduct(productId, productType)
+
+    if (data.hasOwnProperty('errorMessage')) {
+        if (data['errorMessage'].includes(productId)) {
+            return res.status(404).send({ code: data['errorStatusCode'], message: data['errorMessage'] })
+        } else {
+            return res.status(404).send({ code: data['errorStatusCode'], message: `Product type '${productType}' not found` })
+        }
+    } else {
+        res.status(200).send(data)
+    }
 }
 
 // Product Listing Page (PLP) routes

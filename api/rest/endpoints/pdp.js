@@ -7,6 +7,10 @@ const getProductDetails = async (productName) => {
     const $ = await getData(productName)
     let data = {}
 
+    if ($.hasOwnProperty('errorMessage')) {
+        return data = $
+    }
+
     let product = {}
 
     $('#product-details-form').each(function (i, element) {
@@ -68,7 +72,12 @@ const getProductDetails = async (productName) => {
 const product = async (req, res) => {
     let productName = req.params.productName
     const data = await getProductDetails(productName)
-    res.status(200).send(data)
+    if (data.hasOwnProperty('errorMessage')) {
+        return res.status(404).send({ code: data['errorStatusCode'], message: `Product with '${productName}' name not found` })
+    } else {
+        res.status(200).send(data)
+    }
+
 }
 
 // Product Description Page (PDP) routes
