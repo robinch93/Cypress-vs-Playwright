@@ -1,4 +1,3 @@
-
 class Helper {
 
     sortNumArray = (numArray) => {
@@ -36,6 +35,13 @@ class Helper {
             }).then(() => {
                 resolve(exists)
             })
+        })
+    }
+
+    getApiResponse = (endpoint) => {
+        return cy.request({
+            method: 'GET',
+            url: endpoint
         })
     }
 }
