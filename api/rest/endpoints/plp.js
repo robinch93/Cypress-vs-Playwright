@@ -1,5 +1,5 @@
 const { getData, baseUrl } = require('../base')
-const { getText } = require('../utils')
+const { ApiError } = require('../errors')
 const router = require('express').Router()
 
 const getProducts = async (productType) => {
@@ -50,7 +50,7 @@ const getProduct = async (productId, productType) => {
 
     if (element == null) {
         return {
-            errorMessage: `Product with productId '${productId}' is not found for category '${productType}'`,
+            errorMessage: `Product with id '${productId}' is not found for category '${productType}'`,
             errorStatusCode: '404',
             errorStatusText: 'Not Found'
         }
@@ -72,26 +72,29 @@ const getProduct = async (productId, productType) => {
     return data
 }
 
-const products = async (req, res) => {
+const products = async (req, res, next) => {
     let productType = req.params.productType
     const data = await getProducts(productType)
     if (data.hasOwnProperty('errorMessage')) {
-        return res.status(404).send({ code: data['errorStatusCode'], message: `Product type '${productType}' not found` })
+        next(ApiError.notFound(`Product type '${productType}' not found`))
+        return
     } else {
         res.status(200).send(data)
     }
 }
 
-const product = async (req, res) => {
+const product = async (req, res, next) => {
     let productId = req.params.productId
     let productType = req.params.productType
     const data = await getProduct(productId, productType)
 
     if (data.hasOwnProperty('errorMessage')) {
         if (data['errorMessage'].includes(productId)) {
-            return res.status(404).send({ code: data['errorStatusCode'], message: data['errorMessage'] })
+            next(ApiError.notFound(data['errorMessage']))
+            return
         } else {
-            return res.status(404).send({ code: data['errorStatusCode'], message: `Product type '${productType}' not found` })
+            next(ApiError.notFound(`Product type '${productType}' not found`))
+            return
         }
     } else {
         res.status(200).send(data)

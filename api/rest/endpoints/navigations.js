@@ -1,7 +1,7 @@
 const { getData, baseUrl } = require('../base')
-const { getText } = require('../utils')
 const router = require('express').Router()
 const _ = require('lodash')
+const { ApiError } = require('../errors')
 
 const getNavigations = async () => {
     const $ = await getData('')
@@ -56,14 +56,15 @@ const getSubmenu = async (menuName) => {
     return data
 }
 
-const menuNavigations = async (req, res) => {
+const menuNavigations = async (req, res, next) => {
     let name = req.params.menuName
 
     if (name != null || name != undefined) {
         data = await getSubmenu(name)
 
         if (data.hasOwnProperty('errorMessage')) {
-            return res.status(404).send({ code: data['errorStatusCode'], message: `Menu with name '${name}' not found` })
+            next(ApiError.notFound(`Menu with name '${name}' not found`))
+            return
         }
     } else {
         data = await getNavigations()

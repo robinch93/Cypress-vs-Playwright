@@ -3,6 +3,7 @@ const cors = require('cors')
 const { navRoutes } = require('./rest/endpoints/navigations')
 const { plpRoutes } = require('./rest/endpoints/plp')
 const { pdpRoutes } = require('./rest/endpoints/pdp')
+const { ApiError } = require('./rest/errors')
 
 const PORT = process.env.PORT || 3000
 
@@ -14,18 +15,19 @@ var corsOptions = {
 
 app.use(cors(corsOptions))
 
+navRoutes(app)
+plpRoutes(app)
+pdpRoutes(app)
+
 app.use((err, req, res, next) => {
+    console.log(err)
+
+    if (err instanceof ApiError) {
+        res.status(err.code).send({ errorMessage: err.message })
+        return
+    }
     res.status(500).send({ message: 'Something went wrong.' })
 })
-
-// global error handler
-const use = fn => (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next)
-}
-
-use(navRoutes(app))
-use(plpRoutes(app))
-use(pdpRoutes(app))
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)

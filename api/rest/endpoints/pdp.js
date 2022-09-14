@@ -1,5 +1,5 @@
 const { getData, baseUrl } = require('../base')
-const { getText } = require('../utils')
+const { ApiError } = require('../errors')
 const router = require('express').Router()
 
 const getProductDetails = async (productName) => {
@@ -69,11 +69,12 @@ const getProductDetails = async (productName) => {
     return data
 }
 
-const product = async (req, res) => {
+const product = async (req, res, next) => {
     let productName = req.params.productName
     const data = await getProductDetails(productName)
     if (data.hasOwnProperty('errorMessage')) {
-        return res.status(404).send({ code: data['errorStatusCode'], message: `Product with '${productName}' name not found` })
+        next(ApiError.notFound(`Product with '${productName}' name not found`))
+        return
     } else {
         res.status(200).send(data)
     }

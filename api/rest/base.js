@@ -5,11 +5,12 @@ let baseUrl = 'https://demowebshop.tricentis.com'
 
 const instance = axios.create({
     baseURL: baseUrl,
-    timeout: 1000
+    timeout: 5000,
+    headers: { 'User-Agent': 'Chrome' }
 })
 
 let getData = async (url) => instance.get(baseUrl + '/' + url).then(response => {
-    console.log(baseUrl + '/' + url)
+    // console.log(baseUrl + '/' + url)
     const $ = cheerio.load(response.data)
     return $
 }).catch(function (e) {
