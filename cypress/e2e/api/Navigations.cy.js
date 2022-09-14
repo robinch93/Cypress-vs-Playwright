@@ -4,7 +4,6 @@ const { Utils } = require('../../../Utils')
 
 describe('Navigations API', () => {
     const helper = new Helper()
-    const utils = new Utils()
 
     context('endpoint: /topmenu', () => {
 
@@ -35,7 +34,7 @@ describe('Navigations API', () => {
             // compare links
             let links = []
             for (const menu of topmenu) {
-                links.push('https://demowebshop.tricentis.com/' + utils.getLowerCaseHyphen(menu))
+                links.push('https://demowebshop.tricentis.com/' + Utils.getLowerCaseHyphen(menu))
             }
 
             assert.equal(Object.keys(body['links']).length, 7)
@@ -68,7 +67,7 @@ describe('Navigations API', () => {
             // compare submenu links for computers 
             let links = []
             for (const menu of submenuComputers) {
-                links.push('https://demowebshop.tricentis.com/' + utils.getLowerCaseHyphen(menu))
+                links.push('https://demowebshop.tricentis.com/' + Utils.getLowerCaseHyphen(menu))
             }
 
             assert.equal(Object.keys(body['links']).length, 3)

@@ -1,11 +1,11 @@
 const { defineConfig } = require('cypress')
 const { fs } = require('fs')
-const { findVersion } = require('./Utils')
+const { Utils } = require('./Utils')
 
 const execa = require('execa')
 const findBrowser = (browserName) => {
 
-  const version = findVersion(browserName)
+  const version = Utils.findVersion(browserName)
   const browserPath = browserName == 'chromium' ? 'browsers/chromium-' + version + '/chrome-mac/Chromium.app/Contents/MacOS/Chromium' :
     browserName == 'firefox' ? 'browsers/firefox-' + version + '/firefox/Nightly.app/Contents/MacOS/firefox' : 'Browser executable not available'
 
@@ -25,7 +25,7 @@ const findBrowser = (browserName) => {
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: 'https://demowebshop.tricentis.com/',
+    baseUrl: 'https://demowebshop.tricentis.com',
     setupNodeEvents(on, config) {
       return findBrowser('chromium').then((browser) => {
         return {
