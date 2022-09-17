@@ -8,7 +8,7 @@ services:
       dockerfile: ./docker/api/Dockerfile
       target: dev
     container_name: tricentis-api
-    command: npm run dev:server
+    command: npm run api:dev:server
     volumes:
       - ./api:/src/api
       - ./package.json:/src/package.json
@@ -16,8 +16,49 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=development
+    networks:
+      - tricentis
       
+  # mongo database service
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_DATABASE=admin
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    ports:
+      - 27017:27017
+    command: mongod --port 27017 --bind_ip_all
+    volumes:
+      - ./database/mongo-init/:/docker-entrypoint-initdb.d/:ro
+      - mongo-db:/data/db
+    networks:
+      - tricentis
+    
+  # Mongo Express Service
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: always
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    networks:
+      - tricentis
 
-
-  
- 
+volumes:
+  mongo-db:
+networks:
+  tricentis:
+    driver: bridge
