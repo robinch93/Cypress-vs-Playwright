@@ -28,8 +28,8 @@ describe('Navigations API', () => {
             let body = response.body
 
             // compare topmenu
-            expect(body['topmenu']).to.have.length(7)
-            expect(body['topmenu']).to.deep.eq(topmenu)
+            expect(body['navItems']).to.have.length(7)
+            expect(body['navItems']).to.deep.eq(topmenu)
 
             // compare links
             let links = []
@@ -61,8 +61,8 @@ describe('Navigations API', () => {
             let body = response.body
 
             // compare submenu for computers 
-            expect(body['submenu']).to.have.length(3)
-            expect(body['submenu']).to.deep.eq(submenuComputers)
+            expect(body['navItems']).to.have.length(3)
+            expect(body['navItems']).to.deep.eq(submenuComputers)
 
             // compare submenu links for computers 
             let links = []

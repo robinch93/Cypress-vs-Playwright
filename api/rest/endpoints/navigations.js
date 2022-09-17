@@ -7,18 +7,18 @@ const getNavigations = async () => {
     const $ = await getData('')
     let data = {}
 
-    let topmenu = []
+    let navItems = []
     let links = {}
 
     $('ul.top-menu li:not(ul.sublist li)').each(function (i, element) {
         let menuLink = $(element).find('a').attr('href')
         let menuName = $(element).find('a:first').text().trim()
-        topmenu.push(menuName)
+        navItems.push(menuName)
         links[menuName] = baseUrl + menuLink
     })
 
     data = {
-        topmenu,
+        navItems,
         links
     }
 
@@ -33,7 +33,7 @@ const getSubmenu = async (menuName) => {
         return data = $
     }
 
-    let submenu = []
+    let navItems = []
     let links = {}
 
     menuName = menuName == 'apparel-shoes' ? 'Apparel & Shoes' :
@@ -44,12 +44,12 @@ const getSubmenu = async (menuName) => {
     $(baseElement).find('ul.sublist li').each(function (i, element) {
         let menuLink = $(element).find('a').attr('href')
         let menuName = $(element).find('a').text().trim()
-        submenu.push(menuName)
+        navItems.push(menuName)
         links[menuName] = baseUrl + menuLink
     })
 
     data = {
-        submenu,
+        navItems,
         links
     }
 
