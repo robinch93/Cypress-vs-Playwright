@@ -3,7 +3,7 @@ const { getApiData } = require('../base')
 const { Schema } = mongoose
 
 const menuSchema = new Schema({
-    navigationFor: { type: String },
+    navigationFor: { type: String, unique: true },
     navItems: [{ type: String }],
     links: {
         type: Object

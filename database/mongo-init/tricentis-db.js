@@ -15,4 +15,4 @@ db.createUser(
     }
 )
 
-// db.createCollection('top', { capped: true, size: 2 })
+db.createCollection('navigations')
