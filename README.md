@@ -4,18 +4,25 @@ This project is implementation of testing [Tricentis](https://demowebshop.tricen
 
 **Prerequisites**
 1. `git clone https://github.com/robinch93/Cypress-vs-Playwright.git`
-2. Download [NodeJS](https://nodejs.org/en/download/)
-3. Download [Docker](https://www.docker.com/)
+2. Download &nbsp; [NodeJS](https://nodejs.org/en/download/)
+3. Download &nbsp; [Docker](https://www.docker.com/)
+4. Run &nbsp; `docker-compose up -d`
 
 **Tricentis REST API** <br /> [Tricentis](https://demowebshop.tricentis.com/) web application data is exposed via rest api endpoints created using [express](https://expressjs.com/) framework which works as a microservice to be consumed by the e2e api test cases. Follow steps to use API service:
 <br />
-1. Run `npm install && npm run api:server` or `docker-compose up -d api` 
+1. Run &nbsp; `docker-compose up -d api` 
 2. Import [Postman](https://github.com/robinch93/Cypress-vs-Playwright/blob/master/api/collections/tricentis-api.postman_collection.json) or [Insomnia](https://github.com/robinch93/Cypress-vs-Playwright/blob/master/api/collections/tricentis-api.insomnia_collection.json) collections to make api requests 
 3. Example Curl Request for topmenu endpoint: <br />
    `curl --location --request GET 'http://localhost:3000/topmenu'`
 
+**Tricentis Mongo Database** <br /> [Tricentis](https://demowebshop.tricentis.com/) web application data is saved in a MongoDB by sending request to api endpoints. Follow steps to use database service:
+<br />
+1. Run &nbsp; `docker-compose up -d mongodb` 
+2. Populate the database by running&nbsp; `npm run db:populate`
+3. Access MongoDB admin tool at: &nbsp; `http://localhost:8081/db/tricentis-mongo-db`
+
 **Run tests on Local**
-1. Download [NodeJS](https://nodejs.org/en/download/)
+1. Download &nbsp; [NodeJS](https://nodejs.org/en/download/)
 2. Run `npm install`
 3. Run `PLAYWRIGHT_BROWSERS_PATH=$PWD/browsers npx playwright install`
 4. Open and Run Tests using: <br />
