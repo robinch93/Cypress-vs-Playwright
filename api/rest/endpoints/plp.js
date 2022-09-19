@@ -10,27 +10,23 @@ const getProducts = async (productType) => {
         return data = $
     }
 
-    let products = {}
+    let products = []
 
     let numberOfProducts = $('.product-item').length
+    let category = $('.page-title').text().trim()
 
     $('.item-box').each(function (i, element) {
         let productId = $(element).find('.product-item').attr('data-productid')
-        let productTitle = $(element).find('.product-title a').text().trim()
-        let productLink = baseUrl + $(element).find('.product-title a').attr('href')
-        let productPicture = baseUrl + $(element).find('.picture a').attr('href')
-        let productPrice = $(element).find('.actual-price').text()
+        let productDetails = getProductDetails($(element))
 
-        products[i + 1] = {
-            productId,
-            productTitle,
-            productLink,
-            productPicture,
-            productPrice
-        }
+        products.push({
+            productId: parseInt(productId),
+            ...productDetails
+        })
     })
 
     data = {
+        category,
         numberOfProducts,
         products
     }
@@ -56,20 +52,36 @@ const getProduct = async (productId, productType) => {
         }
     }
 
-    let productTitle = $(element).find('.product-title a').text().trim()
-    let productLink = baseUrl + $(element).find('.product-title a').attr('href')
-    let productPicture = baseUrl + $(element).find('.picture a').attr('href')
-    let productPrice = $(element).find('.actual-price').text()
+    let productDetails = getProductDetails($(element))
 
     data = {
-        productId,
-        productTitle,
-        productLink,
-        productPicture,
-        productPrice
+        productId: parseInt(productId),
+        ...productDetails
     }
 
     return data
+}
+
+const getProductDetails = ($) => {
+    let productTitle = $.find('.product-title a').text().trim()
+    let productLink = baseUrl + $.find('.product-title a').attr('href')
+    let productPicture = $.find('.picture a img').attr('src')
+
+    let oldPrice = parseFloat($.find('.old-price').text())
+    let currentPrice = parseFloat($.find('.actual-price').text())
+    let prices = { oldPrice, currentPrice }
+    let discount = isNaN(oldPrice) ? false : true
+
+    let productDetails = {
+        productTitle,
+        productLink,
+        productPicture,
+        discount,
+        price: currentPrice,
+        prices
+    }
+
+    return productDetails
 }
 
 const products = async (req, res, next) => {
