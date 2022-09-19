@@ -11,10 +11,16 @@ const getProductDetails = async (productName) => {
         return data = $
     }
 
+    let breadcrumb = $('.breadcrumb a span').map((i, element) => {
+        return $(element).text().trim()
+    }).get()
+
+    let category = breadcrumb.slice(-1)[0]
+
     let product = {}
 
     $('#product-details-form').each(function (i, element) {
-        let id = $(element).find('div').attr('data-productid')
+        let id = parseInt($(element).find('div').attr('data-productid'))
         let name = $(element).find('.product-name h1').text().trim()
         let shortDescription = $(element).find('.short-description').text().trim()
         let inStock = $(element).find('.stock .value').text().trim()
@@ -22,22 +28,26 @@ const getProductDetails = async (productName) => {
         let stars = $(element).find('.rating div').attr('style').replace(/[^0-9]+/gi, '')
         let numericRating = (100 / stars).toFixed(2)
         let rating = { stars: stars + '%', numeric: numericRating }
-        let numberOfReviews = $(element).find('.product-review-links a').text().trim().replace(/[^0-9]+/gi, '')
+        let numberOfReviews = parseInt($(element).find('.product-review-links a').text().trim().replace(/[^0-9]+/gi, ''))
         let reviewLink = baseUrl + $(element).find('.product-review-links a').attr('href')
         let reviews = { number: numberOfReviews, link: reviewLink }
 
         let size = $(element).find('.attributes dd select option:selected').text().trim()
+
         let selectedColor = $(element).find('.color-squares .selected-value label span').attr('title')
         let colorOptions = $(element).find('.color-squares li span').map((i, item) => {
             return $(item).attr('title')
         }).get()
-
         let color = { selected: selectedColor, options: colorOptions }
-        let details = { size, color }
 
         let link = baseUrl + $(element).find('.product-title a').attr('href')
         let picture = $(element).find('.picture img').attr('src')
-        let price = $(element).find('.product-price').text().trim()
+
+        let oldPrice = parseFloat($(element).find('.old-product-price span').text())
+        let currentPrice = parseFloat($(element).find('.product-price span').text())
+        let prices = { oldPrice, currentPrice }
+        let discount = isNaN(oldPrice) ? false : true
+
         let quantity = $(element).find('.qty-input').attr('value')
         let fullDescription = $(element).find('.full-description').text().trim()
         let tags = {}
@@ -48,22 +58,28 @@ const getProductDetails = async (productName) => {
         product = {
             id,
             name,
+            category,
+            breadcrumb,
             shortDescription,
             link,
             picture,
-            price,
+            discount,
+            price: currentPrice,
+            prices,
             available,
             rating,
             reviews,
-            details,
+            size: size.length == 0 ? null : size,
+            color,
             quantity,
             fullDescription,
             tags
         }
+
     })
 
     data = {
-        product
+        ...product
     }
 
     return data
