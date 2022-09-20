@@ -1,10 +1,12 @@
-const { getApiData } = require('../database/base')
+const { getApiData } = require('./apiCall')
 
 const getAllProductDetailsFor = async (field, endpoint) => {
     let productFieldArray = []
     let apiData = await getApiData('products/' + endpoint)
-    for (let productDetail of apiData['products']) {
-        productFieldArray.push(productDetail[field])
+    if (apiData != undefined) {
+        for (let productDetail of apiData['products']) {
+            productFieldArray.push(productDetail[field])
+        }
     }
     return productFieldArray
 }
@@ -20,6 +22,5 @@ const getAllProductIdsForCategory = async (endpoint) => {
 const getAllProductLinksForCategory = async (endpoint) => {
     return getAllProductDetailsFor('productLink', endpoint)
 }
-
 
 module.exports = { getAllProductNamesForCategory, getAllProductIdsForCategory, getAllProductLinksForCategory }

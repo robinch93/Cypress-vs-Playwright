@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { getApiData } = require('../base')
+const { getApiData } = require('../apiCall')
 const { Schema } = mongoose
 
 const pdpSchema = new Schema({
@@ -32,9 +32,9 @@ const pdpSchema = new Schema({
     quantity: { type: String },
     fullDescription: { type: String },
     tags: { type: Object }
-})
+}, { collection: 'Product Description Page' })
 
-const Pdp = mongoose.model('ProductDescriptionPage', pdpSchema)
+const Pdp = mongoose.model('Product Description Page', pdpSchema)
 
 const saveProductsWithName = async (endpoint) => {
     saveProducts('product/' + endpoint)
@@ -48,4 +48,4 @@ const saveProducts = async (endpoint) => {
     })
 }
 
-module.exports = { saveProductsWithName }
+module.exports = { saveProductsWithName, Pdp }

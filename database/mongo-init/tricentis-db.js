@@ -15,4 +15,8 @@ db.createUser(
     }
 )
 
-db.createCollection('navigations')
+db.createCollection('Navigations')
+db.createCollection('Product Listing Page')
+db.createCollection('Product Description Page')
+
+module.exports = { db }

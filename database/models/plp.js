@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { getApiData } = require('../base')
+const { getApiData } = require('../apiCall')
 const { Schema } = mongoose
 
 const plpSchema = new Schema({
@@ -17,9 +17,9 @@ const plpSchema = new Schema({
             currentPrice: mongoose.Types.Decimal128
         }
     }]
-})
+}, { collection: 'Product Listing Page' })
 
-const Plp = mongoose.model('ProductListingPage', plpSchema)
+const Plp = mongoose.model('Product Listing Page', plpSchema)
 
 const saveProductsWithCategory = async (endpoint) => {
     saveProducts('products/' + endpoint)
@@ -33,4 +33,4 @@ const saveProducts = async (endpoint) => {
     })
 }
 
-module.exports = { saveProductsWithCategory }
+module.exports = { saveProductsWithCategory, Plp }

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { getApiData } = require('../base')
+const { getApiData } = require('../apiCall')
 const { Schema } = mongoose
 
 const menuSchema = new Schema({
@@ -8,7 +8,7 @@ const menuSchema = new Schema({
     links: {
         type: Object
     }
-})
+}, { collection: 'Navigations' })
 
 const Navigations = mongoose.model('Navigations', menuSchema)
 
@@ -29,4 +29,4 @@ const saveNavigations = async (endpoint) => {
     })
 }
 
-module.exports = { saveTopmenu, saveSubmenus }
+module.exports = { saveTopmenu, saveSubmenus, Navigations }
