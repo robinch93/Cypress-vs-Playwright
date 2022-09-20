@@ -6,9 +6,10 @@
   "scripts": {
     "api:prod:server": "node api/server.js",
     "api:dev:server": "nodemon api/server.js",
-    "db:prod:server": "node database/index.js",
-    "db:dev:server": "nodemon database/index.js",
-    "db:populate": "nodemon database/populate.js",
+    "db:prod:server": "node database/connection.js",
+    "db:dev:server": "nodemon database/connection.js",
+    "db:populate": "node database/populate.js",
+    "db:truncate": "node database/truncate.js",
     "cy:open:chromium": "node_modules/.bin/cypress open --e2e --browser browsers/chromium-*/chrome-mac/Chromium.app/Contents/MacOS/Chromium",
     "cy:open:firefox": "node_modules/.bin/cypress open --e2e --browser browsers/firefox-*/firefox/Nightly.app/Contents/MacOS/firefox",
     "cy:open:e2e": "cypress open --e2e",
@@ -37,6 +38,8 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "bluebird": "^3.7.2",
+    "chalk": "^4.1.2",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "express": "^4.18.1",

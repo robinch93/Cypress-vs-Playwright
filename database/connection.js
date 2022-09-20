@@ -1,11 +1,12 @@
 const mongoose = require('mongoose')
+require('dotenv').config()
 
-const URI = 'mongodb://root:password@0.0.0.0:27017/tricentis-mongo-db?authSource=admin'
+const URI = process.env.MONGO_DB_URI
 
 mongoose.connect(
     URI,
     {
-        dbName: 'tricentis-mongo-db',
+        dbName: process.env.MONGO_DB_NAME,
         useNewUrlParser: true,
         useUnifiedTopology: true
     }).then(() => {

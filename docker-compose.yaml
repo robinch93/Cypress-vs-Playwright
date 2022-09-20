@@ -8,6 +8,7 @@ services:
       dockerfile: ./docker/api/Dockerfile
       target: dev
     container_name: tricentis-api
+    restart: unless-stopped
     command: npm run api:dev:server
     volumes:
       - ./api:/src/api
@@ -24,10 +25,11 @@ services:
     image: mongo:latest
     container_name: mongodb
     restart: unless-stopped
+    env_file: .env
     environment:
-      - MONGO_INITDB_DATABASE=admin
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     ports:
       - 27017:27017
     command: mongod --port 27017 --bind_ip_all
@@ -43,11 +45,11 @@ services:
     container_name: mongo-express
     restart: always
     environment:
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
-      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
-      - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
+      - ME_CONFIG_MONGODB_SERVER=${ME_CONFIG_MONGODB_SERVER}
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${ME_CONFIG_MONGODB_ADMINUSERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${ME_CONFIG_MONGODB_ADMINPASSWORD}
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=${ME_CONFIG_MONGODB_ENABLE_ADMIN}
+      - ME_CONFIG_MONGODB_AUTH_DATABASE=${ME_CONFIG_MONGODB_AUTH_DATABASE}
     ports:
       - 8081:8081
     depends_on:
