@@ -21,6 +21,11 @@ This project is implementation of testing [Tricentis](https://demowebshop.tricen
 2. Populate the database by running&nbsp; `npm run db:populate`
 3. Access MongoDB admin tool at: &nbsp; `http://localhost:8081/db/tricentis-mongo-db`
 
+
+#### Database Truncate Commands
+>  Drop Database: &nbsp; `npm run db:drop` <br />
+> Empty All Collections: &nbsp; `npm run db:empty:all` <br />
+
 **Run tests on Local**
 1. Run `npm install`
 2. Run `PLAYWRIGHT_BROWSERS_PATH=$PWD/browsers npx playwright install`
