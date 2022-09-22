@@ -3,7 +3,9 @@ require('dotenv').config()
 
 const URI = process.env.MONGO_DB_URI
 
-mongoose.connect(
+mongoose.Promise = global.Promise
+
+let db = mongoose.connect(
     URI,
     {
         dbName: process.env.MONGO_DB_NAME,
@@ -11,6 +13,7 @@ mongoose.connect(
         useUnifiedTopology: true
     }).then(() => {
         console.log('Connected to mongo DB')
+        return mongoose.connection.db
     }).catch((err) => {
         console.log(err.message)
     })
@@ -31,3 +34,5 @@ process.on('SIGINT', async () => {
     await mongoose.connection.close()
     process.exit(0)
 })
+
+module.exports = { db }
